@@ -4,20 +4,11 @@ const bodyParser = require("body-parser");
 const helmet = require("morgan");
 const path = require("path");
 const compression = require("compression");
-const { MONGO_URI } = require("./config/Constants");
+const connectDB = require("./config/runDb");
 
 const app = express();
 
-mongoose
-  .connect(MONGO_URI, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {})
-  .catch((err) => {
-    console.log(err);
-  });
+connectDB;
 
 app.use(helmet());
 app.use(express.json());

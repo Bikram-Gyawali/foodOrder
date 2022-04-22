@@ -57,3 +57,48 @@ exports.signUp = (req, res, next) => {
     });
 };
 
+exports.logIn = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const err = new Error("Validation Error");
+    err.status = 422;
+    err.data = errors.array();
+    throw err;
+  }
+
+  let { email, password } = req.body;
+  let logInUser = null;
+  User.findOne({ email: email })
+    .then((user) => {
+      if (!user) {
+        const err = new Error("User Does not exist with the provided email ID");
+        err.statusCode = 401;
+        throw err;
+      }
+      logInUser = user;
+      return bcrypt.compare(password, user.password);
+    })
+    .then((result) => {
+      if (!result) {
+        const err = new Error("Password doesnot match!");
+        err.statusCode = 401;
+        throw err;
+      }
+
+      const token = jwt.sign(
+        {
+          userId: logInUser._id.toString(),
+          email: logInUser.email,
+        },
+        APP_KEY,
+        { expiresIn: "90d" }
+      );
+      res.status(200).json(token);
+    })
+    .catch((err) => {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+    });
+};
