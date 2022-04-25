@@ -1,16 +1,21 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const helmet = require("morgan");
 const path = require("path");
+
 const compression = require("compression");
 const connectDB = require("./config/runDb");
+const morgan = require('morgan');
+const helmet = require('helmet');
 
 const app = express();
 
-connectDB;
 
 app.use(helmet());
+app.use(compression());
+
+connectDB;
+
 app.use(express.json());
 
 app.use((err, req, res, next) => {

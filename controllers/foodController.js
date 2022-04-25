@@ -63,7 +63,7 @@ exports.listFoodDetails = (req, res, next) => {
     });
 };
 
-exports.arriveIn30min = (req, res, next) => {
+exports.getInThirtyMinutes = (req, res, next) => {
   const page = +req.query.page || 1;
   let totalFoods;
   Food.find({ readyTime: { $lt: 31 } })
