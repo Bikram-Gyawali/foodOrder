@@ -26,3 +26,31 @@ router.post(
   ],
   userController.signUp
 );
+
+router.post(
+  "/login",
+  [
+    body("email")
+      .isEmail()
+      .withMessage("Please Enter a valid email ID")
+      .normalizeEmail(),
+    body("password")
+      .trim()
+      .isLength({ min: 6 })
+      .withMessage("Please Enter a Valid Password!"),
+  ],
+  userController.onLogin
+);
+
+router.put("/cart/:id/:quantity", auth, userController.updateCart);
+
+router.post("/cart/:id", auth, userController.getCart);
+router.get("/cart", auth, userController.getCart);
+router.get("/order", auth, userController.getOrder);
+router.get("/order/:id", auth, userController.getSelectedOrder);
+
+router.post("/add-order", auth, userController.addOrderToCart);
+router.get("/profile", auth, userController.viewProfile);
+router.post("/address", auth, userController.editAddress);
+
+module.exports = router;
