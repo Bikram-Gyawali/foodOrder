@@ -56,3 +56,13 @@ exports.addFood = (req, res, next) => {
       next(err);
     });
 };
+
+exports.listAllRestaurant = (req, res, next) => {
+  Restaurant.find()
+    .then((restaurants) => {
+      res.status(200).json(restaurants);
+    })
+    .catch((err) => {
+      return AppErr.onError(res, "restaurant add error" + err);
+    });
+};
