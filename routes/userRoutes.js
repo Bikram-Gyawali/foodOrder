@@ -44,7 +44,7 @@ router.post(
 
 router.put("/cart/:id/:quantity", auth, userController.updateCart);
 
-router.post("/cart/:id", auth, userController.getCart);
+router.post("/cart/:id", auth, userController.addToCart);
 router.get("/cart", auth, userController.getCart);
 router.get("/order", auth, userController.getOrder);
 router.get("/order/:id", auth, userController.getSelectedOrder);
