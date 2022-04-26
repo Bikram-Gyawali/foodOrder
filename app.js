@@ -1,22 +1,27 @@
 const express = require("express");
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
 const path = require("path");
 
 const compression = require("compression");
 const connectDB = require("./config/runDb");
-const morgan = require('morgan');
-const helmet = require('helmet');
+const helmet = require("helmet");
+const userRoutes=require("./routes/userRoutes");
+const foodRoutes=require("./routes/foodRoutes");
+const adminRoutes=require("./routes/adminRoutes");
+
 
 const app = express();
 
+connectDB;
 
 app.use(helmet());
 app.use(compression());
-
-connectDB;
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use(express.json());
+app.use("/user", userRoutes);
+app.use("food", foodRoutes);
+app.use("/admin", adminRoutes);
+app.use(AppErr.unAuthorized);
 
 app.use((err, req, res, next) => {
   const status = err.statusCode || 500;
