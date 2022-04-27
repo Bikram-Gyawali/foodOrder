@@ -7,7 +7,7 @@ const helmet = require("helmet");
 const userRoutes=require("./routes/userRoutes");
 const foodRoutes=require("./routes/foodRoutes");
 const adminRoutes=require("./routes/adminRoutes");
-
+const err=require("./controllers/errorController");
 
 const app = express();
 
@@ -21,7 +21,7 @@ app.use(express.json());
 app.use("/user", userRoutes);
 app.use("food", foodRoutes);
 app.use("/admin", adminRoutes);
-app.use(AppErr.unAuthorized);
+app.use(err.unAuthorized);
 
 app.use((err, req, res, next) => {
   const status = err.statusCode || 500;

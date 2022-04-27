@@ -1,8 +1,8 @@
 const Food = require("../models/Food");
 const Restaurant = require("../models/Restaurant");
-const AppErr = require("./errorController");
+const err = require("./errorController");
 
-exports.addResturant = (req, res, next) => {
+exports.addRestaurant = (req, res, next) => {
   const { name, foodType, pinCode, address, phone } = req.body;
 
   const restaurant = new Restaurant({
@@ -19,7 +19,7 @@ exports.addResturant = (req, res, next) => {
       return res.json(restaurant);
     })
     .catch((err) => {
-      return AppErr.onError(res, "restaurant add error" + err);
+      return err.onError(res, "restaurant add error" + err);
     });
 };
 
@@ -29,7 +29,7 @@ exports.addFood = (req, res, next) => {
 
   let currentRestaurant;
 
-  Restaurant.find(restaurantId)
+  Restaurant.findById(restaurantId)
     .then((restaurant) => {
       currentRestaurant = restaurant;
       let food = new Food({
@@ -63,6 +63,6 @@ exports.listAllRestaurant = (req, res, next) => {
       res.status(200).json(restaurants);
     })
     .catch((err) => {
-      return AppErr.onError(res, "restaurant add error" + err);
+      return err.onError(res, "restaurant add error" + err);
     });
 };

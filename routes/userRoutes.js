@@ -39,7 +39,7 @@ router.post(
       .isLength({ min: 6 })
       .withMessage("Please Enter a Valid Password!"),
   ],
-  userController.onLogin
+  userController.logIn
 );
 
 router.put("/cart/:id/:quantity", auth, userController.updateCart);

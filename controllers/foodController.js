@@ -1,6 +1,6 @@
 const Food = require("../models/Food");
 const Restaurant = require("../models/Restaurant");
-const AppErr = require("./errorController");
+const err = require("./errorController");
 
 const LIST_ITEMS = 10;
 
@@ -30,7 +30,7 @@ exports.listTopResturants = (req, res, next) => {
       res.status.json(result);
     })
     .catch((err) => {
-      return AppErr.onError(
+      return err.onError(
         res,
         "restaurant not found around your location" + err
       );

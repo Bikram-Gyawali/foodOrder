@@ -1,6 +1,5 @@
-const jwt = require("jwt");
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const AppErr = require("./errorController");
 const { APP_KEY } = require("../config/Constants");
 const { validationResult } = require("express-validator");
 
